@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<head>
+    <title>LonelySim</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Alata|Courier+Prime|Press+Start+2P|Sarpanch&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" crossorigin="anonymous">
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div id="forbidden">
+        <div id="forbidden-container">
+            <p id="close-forbidden">✖️</p>
+            <h1>CLEARNET TRAVEL IS STRICTLY FORBIDDEN!</h1>
+        </div>
+    </div>
+    <div id="timer">
+        <p id="timer-sec">180 </p><p>SECONDS UNTIL WORK</p>
+    </div>
+    <div class="modal-grouper">
+        <div class="modal-window">
+            <h2 class="modal-header">Hello, prisoner.</h2>
+            <p class="modal-p">
+                You have 77 more days of mandatory pixel fragment cleanup until you are free to use the clearnet.
+                Please proceed to the monitored social application until the beginning of your shift, which begins in 3 minutes.
+            </p>
+            <button id="close-modal">Thank you.</button>
+        </div>
+    </div>
+    <div class="link-editor-grouper">
+        <button class="link-editor-grouper-close">
+            ✖️
+        </button>
+        <div class="link-editor-container">
+            <h1 class="link-head">create new link</h1>
+            <h2 class="link-name">name:</h2>
+            <input required class="link-editor-input" id="l-name" type="text">
+            <h2 class="link-uri">URI:</h2>
+            <input required class="link-editor-input" id="l-URI" type="text">
+            <h2 class="link-note">note:</h2>
+            <input required class="link-editor-input" id="l-note"type="text">
+            <button class="link-editor-save-btn">save link</button>
+        </div>
+    </div>
+    <section id="app-container">
+        <nav id="nav-container">
+            <div id="app-label">chats</div>
+            <div class="nav-icon active" id="chaticon" name="chats"><i class="fas fa-comments"></i></div>
+            <div class="nav-icon" id="notesicon" name="notes"><i class="fas fa-clipboard"></i></div>
+            <div class="nav-icon" id="linksicon" name="links"><i class="fas fa-bookmark"></i></div> 
+            <div class="nav-icon" id="contactsicon" name="contacts"><i class="fas fa-id-card"></i></div> 
+        </nav>
+        <div id="content-container">
+            <div id="content-flash"></div>
+            <div class="container notesicon">            
+                <div class="notes-ui" id="notes-nav">
+                    <p id="new-note">new note</p>
+                </div>
+            </div>
+            <div class="container linksicon">
+                <div class="links-ui" id="links-nav">
+                    <p id="new-link">new link</p>
+                </div>
+                <div id="1111" class="link-card clearnet">
+                    <a class="link-anchor">
+                        <h4 class="link-title clearnet">Google</h4>
+                        <p class="link-text clearnet">a clearnet link. it's like looking through a window made of concrete.</p>
+                    </a>
+                    <button class="link-del" name="1111">delete</button>
+                </div>
+                <div id="6666" class="link-card clearnet">
+                    <a class="link-anchor">
+                        <h4 class="link-title clearnet">Memesearch</h4>
+                        <p class="link-text clearnet">an app i was working on before I got locked in here.</p>
+                    </a>
+                    <button class="link-del" name="6666">delete</button>
+                </div>
+            </div>
+            <div class="container contactsicon">
+
+            </div>
+            <div class="container chaticon">
+                <div id="chat-tabs-container">
+                    <a class="tab active" id="james">
+                        james
+                    </a>
+                    <a class="tab" id="claire">
+                        claire
+                    </a>
+                    <a class="tab" id="alessa">
+                        alessa
+                    </a>
+                    <a class="tab" id="maria">
+                       maria
+                    </a>
+                    <a class="tab" id="unknown">
+                        unknown
+                    </a>
+                </div>
+                <div class="chat-messages james">
+                    <div class="them-bubble"><p class="message">I think I got in through an open endpoint on their server</p></div>
+                    <div class="them-bubble"><p class="message">do U have a chat from unknown?</p></div>
+                    <div class="them-bubble"><p class="message">password is "vincent7SEVENvincent7"</p></div>
+                    <div class="them-bubble"><p class="message">DO IT BEFORE THEY ERASE THIS</p></div>
+                    <div class="them-bubble"><p class="message">don't f*** it up ;)</p></div>
+
+                </div>
+                <form id="chat-input">
+                    <input type="text" id="chat-text-input" autocomplete="off"></input>
+                    <button id="chat-send">send</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>

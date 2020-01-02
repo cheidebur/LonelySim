@@ -1,2 +1,2 @@
 # LonelySim
-escape room-type game but it's a GUI
+ escape room-type game but with a GUI
