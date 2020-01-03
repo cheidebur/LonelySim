@@ -1,6 +1,6 @@
 # LonelySim
 ## Hello, prisoner.
-
+![screenshot of forbidden travel](https://github.com/cheidebur/LonelySim/blob/master/screenshot1.png "Screenshot")
 Welcome to LonelySim, an escape room-type game, but with a GUI.
 LonelySim displays a variety of different user interfaces, some providing a clue
 to help you exit the simulation, and others just because.
