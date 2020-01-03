@@ -33,7 +33,7 @@
                 <br>
                 You have 180 seconds to hack the simulation.
             </p>
-            <button id="close-modal">Thank you.</button>
+            <button id="close-modal">Proceed</button>
         </div>
     </div>
     <div class="note-editor-grouper">
@@ -191,13 +191,24 @@
     </section>
     <!-- notes window -->
     <div id="notes-window-grouper">
-        
+        <p id="close-notes-window">✖️</p>
+        <h2 class="notes-window-header">title:</h2>
+        <p id="notes-window-title"></p>
+        <h2 class="notes-window-header">contents:</h2>
+        <p id="notes-window-content"></p>
+    </div>
+    <!-- losegame screen-->
+    <div id="losegame-modal">
+        <div id="losegame-grouper">
+            <h1 id="endgame-header">You have failed to exit the simulation.</h1>
+            <button class="play-again">play again?</button>
+        </div>
     </div>
     <!-- endgame screen-->
     <div id="endgame-modal">
         <div id="endgame-grouper">
-            <h1 id="endgame-header">Congratulations, you have exited the simulation.</h1>
-            <button id="play-again">play again?</button>
+            <h1 id="endgame-header">Congratulations. <br> You exited the simulation in <p id="win-time">X</p> seconds.</p></h1>
+            <button class="play-again">play again?</button>
         </div>
     </div>
 </body>

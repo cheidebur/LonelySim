@@ -1,9 +1,6 @@
   /*
   LonelySim by Chase Heidebur - 2020
   Escape the UI game
-  Welcome to the code!
-  Lots of object literals here; not the best organization
-  I'm using this project to grapple OOP principles further for my new projects.
   */
 
 $(document).ready(function() {
@@ -11,13 +8,13 @@ $(document).ready(function() {
 
     var notesData = [{
         notesTitle: "this note",
-        notesText: "every day is exactly the same"
+        notesText: "every day is exactly the same. every day is exactly the same. every day is exactly the same. every day is exactly the same. every day is exactly the same, but some days aren't. Read the third note."
     }, {
         notesTitle: "cold showers",
-        notesText: "I've been eating too many sweets lately'"
+        notesText: "I've been eating too many sweets lately, but then again, who's going to judge? If I want a piece of dark chocolate after spending an hour at the DMV, then I will have it."
     }, {
         notesTitle: "inspiration",
-        notesText: "is it healthy to run only on inspiration and nothing else? sometimes it sure does feel like I need some guidance. or energy. i can only drink so much iced coffee before I explode."
+        notesText: "is it healthy to run only on inspiration and nothing else? sometimes it sure does feel like I need some guidance. or energy. i can only drink so much iced coffee before I explode. HEY LOSER IT'S JAMES. I FIGURED IT OUT - JUST DELETE ALL YOUR CONTACTS. Apparently the simulation thinks you need new friends."
     }]
     var jamesConvo = {
         messages: [{
@@ -52,7 +49,7 @@ $(document).ready(function() {
             contents: "Hey. what do you mean? I wrote your name just fine. Are you imagining things again?"
         }, {
             class: "my-bubble",
-            contents: "no, you wrote some code thing. and what the hell? lately, I feel like everyone is gaslighting me. I'm not crazy. I just forget things, or something, I don't know. Reply when you get this."
+            contents: "no, you wrote some code thing. and what the hell? You are literally so rude. I only forget things sometimes. Reply when you get this."
         }]
     }
     var alessaConvo = {
@@ -95,12 +92,15 @@ $(document).ready(function() {
     console.log("Welcome to LonelySim");
 
     //reset game or play again
-    $("#play-again").click( e => {
-        window.location.reload();
+    $(".play-again").click( e => {
+        resetGame();
     })
     $("#game-reset").click( e => {
-        window.location.reload();
+        resetGame();
     })
+    function resetGame() {
+        window.location.reload();
+    }
     //close modal
     $("#close-modal").click( e => {
         $(".modal-grouper").fadeOut(200);
@@ -114,11 +114,20 @@ $(document).ready(function() {
         let seconds = 180;
         let timer = document.querySelector("#timer-sec");
         setInterval(function() {
-            if (seconds <= -1) return clearInterval(); //turn off the interval at 0
+            if (seconds <= -1) {
+                //turn off the interval at 0
+                clearInterval();
+                return loseGame();
+            }
         timer.innerText = seconds--;
         }, 1000);
     }
-
+    function loseGame() {
+        $("#timer").fadeOut( e => {
+            console.log("hi");
+            $("#losegame-modal").fadeIn();
+        })
+    }
     //nav functionality
     $(".nav-icon").click( e => {
         //flash effect
@@ -254,7 +263,7 @@ $(document).ready(function() {
     //save new note
     $(".note-editor-save-btn").click( e => {
         let noteName = $("#n-name").val();
-        let noteContents = $("#n-name").val();
+        let noteContents = $("#n-contents").val();
         //create and append an error msg if no values
         if (!noteName || !noteContents) {
             $("#error-p").remove();
@@ -414,19 +423,47 @@ $(document).ready(function() {
             //if there are <=5 child nodes, all contacts are gone, and usr winz
             var contacts = document.getElementsByClassName("container contactsicon")[0];
             if (contacts.childNodes.length <= 5) {
-                console.log("No more contacts remain");
-                endGame();
+                time = document.getElementById("timer-sec").innerText;
+                console.log("time is ", time)
+                console.log("No more contacts remain - finished the game in ", time, "seconds.");
+                endGame(time);
             }
         })
     })
     //endgame functionality
-    function endGame() {
+    function endGame(gameTime) {
         $("#timer").fadeOut(400, function(e) {
+            winTimeCounter = document.getElementById("win-time");
+            winTimeCounter.innerText = gameTime;
             $("#endgame-modal").fadeIn();
         });
         
     }
     //notes functionality
+    //open note window
+    $(".container.notesicon").click(function(e) {
+        if (e.target.className == "expand-note") {
+            //grab full note contents
+            let noteId = e.target.getAttribute("note-id");
+            console.log("expanding note id", noteId);
+            let note = document.getElementById(noteId);
+            let noteText = note.getAttribute("full-note-text");
+            let noteTitle = note.getAttribute("note-title");
+
+            //append contents to note window
+            let noteWindowTitle = document.getElementById("notes-window-title");
+            noteWindowTitle.innerText = noteTitle;
+            let noteWindowP = document.getElementById("notes-window-content");
+            noteWindowP.innerText = noteText;
+
+            //show note window
+            $("#notes-window-grouper").fadeIn();
+        }
+    })
+    //close note window
+    $("#close-notes-window").click( e => {
+        $("#notes-window-grouper").fadeOut();
+    })
     function unlockNotes() {
         let pwTry = document.getElementById("notes-lock-input").value;
         if (pwTry == "freeme7") {
@@ -435,7 +472,15 @@ $(document).ready(function() {
                 $(".notes-ui").css("display", "inline-block");
                 //generate notes from notesData object
                 notesCompose(notesData);
-            });
+            })
+        } else {
+            $("#error-p").remove();
+            let errorP = document.createElement("p");
+            errorP.setAttribute("id", "error-p");
+            errorP.setAttribute("color", "red");
+            errorP.innerText = "Incorrect password";
+            let unlockDiv = document.getElementById("notes-lock-div");
+            unlockDiv.append(errorP);
         }
     }      
     function shortenNote(note) {
@@ -472,13 +517,22 @@ $(document).ready(function() {
             noteTitle.setAttribute("class", "note-title");
             let noteText = document.createElement("p");
             noteText.setAttribute("class", "note-text");
-            noteTitle.innerText = note.notesTitle
+            let expandNote = document.createElement("a");
+            expandNote.setAttribute("note-id", uniqueId);
+            expandNote.setAttribute("class", "expand-note");
+            expandNote.innerText = "read more";
+            noteTitle.innerText = note.notesTitle;
             noteText.innerText = shortenedNote;
+
+            //store the non-shortened note in a hidden value for expansion
+            notesGrouper.setAttribute("note-title", note.notesTitle);
+            notesGrouper.setAttribute("full-note-text", note.notesText);
 
             //compile the created elements
             noteCard.append(noteDelete);
             noteCard.append(noteTitle);
             noteCard.append(noteText);
+            noteCard.append(expandNote);
             notesGrouper.append(noteCard);
             $(".container.notesicon").append(notesGrouper);;
             $(".notes-ui").fadeIn();
