@@ -186,6 +186,7 @@ body {
     border: 2px solid #ff000061;
     align-items: center;
     width: 50%;
+    min-width: 19em;
     margin: 0 auto;
     height: 70%;
     justify-content: center;
@@ -647,7 +648,7 @@ body {
     }
     .tab {
         font-size: .5em;
-    }
+     }
     #app-label {
         color: black;
         background-color: #505b72;
@@ -656,6 +657,12 @@ body {
         padding: 1em;
         margin: 1em;
         align-items: center;
+    }
+    .link-card {
+        width: 70%;
+    }
+    .stat-box {
+        width: 5em;
     }
     #content-container {
         width: 100%;
