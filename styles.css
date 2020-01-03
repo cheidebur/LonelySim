@@ -4,7 +4,7 @@ body {
     padding: 0;
     margin: 0;
 }
-/*-------prisoner control styling*/
+/*-------prisoner boundaries styling*/
 #forbidden {
     display: none;
     position: fixed;
@@ -14,10 +14,11 @@ body {
     z-index: 3;
 }
 #forbidden h1 {
-    font-size: 4em;
+    font-size: 6vw;
     color: red;
     margin: 0;
     max-width: 10em;
+    background: black;
 }
 #forbidden p {
     position: absolute;
@@ -41,6 +42,7 @@ body {
     background-color: white;
     font-family: "Press Start 2P";
     background: url(eye.png);
+    background-size: 12%;
 }
 /*-------timer styling*/
 #timer {
@@ -61,6 +63,11 @@ body {
     display: inline-block;
     margin: 0;
     padding-left: 1em;
+}
+#timer button {
+    font-size: 2em;
+    font-family: "Press Start 2P";
+    margin-left: 1em;
 }
 /*-------modal styling*/
 .modal-grouper {
@@ -137,6 +144,7 @@ body {
     position: relative;
     left: 0;
     top: -1.5em;
+    padding-right: .8em;
     font-family: "Press Start 2P";
 }
 .nav-icon {

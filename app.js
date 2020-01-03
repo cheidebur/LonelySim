@@ -1,3 +1,12 @@
+  /*
+  LonelySim by Chase Heidebur - 2020
+  Escape the UI game
+  Welcome to the code!
+  Lots of object literals here; not the best organization
+  I used this project to grapple OOP principles further for my new projects.
+  I'm a junior dev, go easy on me! 
+  */
+
 $(document).ready(function() {
     var linksData = []
 
