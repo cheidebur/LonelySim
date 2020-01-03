@@ -3,22 +3,15 @@
   Escape the UI game
   Welcome to the code!
   Lots of object literals here; not the best organization
-  I used this project to grapple OOP principles further for my new projects.
-  I'm a junior dev, go easy on me! 
+  I'm using this project to grapple OOP principles further for my new projects.
   */
 
 $(document).ready(function() {
-    var linksData = []
+    var linksData = [];
 
     var notesData = [{
-        notesTitle: "that note",
-        notesText: "James told me about the Internet the other day. Supposedly, it's some free network where people just post whatever they want. he's going crazy, keeps telling me I live in a simulation"
-    }, {
         notesTitle: "this note",
         notesText: "every day is exactly the same"
-    }, {
-        notesTitle: "favorite pizza",
-        notesText: "green peppers!!"
     }, {
         notesTitle: "cold showers",
         notesText: "I've been eating too many sweets lately'"
@@ -100,6 +93,14 @@ $(document).ready(function() {
     
 
     console.log("Welcome to LonelySim");
+
+    //reset game or play again
+    $("#play-again").click( e => {
+        window.location.reload();
+    })
+    $("#game-reset").click( e => {
+        window.location.reload();
+    })
     //close modal
     $("#close-modal").click( e => {
         $(".modal-grouper").fadeOut(200);
@@ -122,31 +123,38 @@ $(document).ready(function() {
     $(".nav-icon").click( e => {
         //flash effect
         $("#content-flash").fadeIn(100, function(e) {
-            $(this).fadeOut(200);
+            $(this).fadeOut(200, afterFlash());
         })
-        //reset classes on .nav-icon
-        $(".nav-icon.active").attr("class", "nav-icon");
-        const thisIcon = e.currentTarget.id;
-        console.log("nav icon clicked ", thisIcon);
-        $("#" + thisIcon).addClass("active");
-        //change menu label
-        const newLabel = e.currentTarget.getAttribute("name");
-        console.log("changing label to ", newLabel);
-        $("#app-label").text(newLabel);
-        //remove elements and switch content
-        $(".link-card.usr-added").remove();
-        $(".container").hide();
-        console.log("notes unlocked is ", notesUnlocked);
-        if (!notesUnlocked && thisIcon == "notesicon") {
-            //$(".container.notesicon").empty();
-            $("#notes-lock-div").remove();
-            composeNotesLock();
+        function afterFlash() {
+            //reset classes on .nav-icon
+            $(".nav-icon.active").attr("class", "nav-icon");
+            const thisIcon = e.currentTarget.id;
+            console.log("nav icon clicked ", thisIcon);
+            $("#" + thisIcon).addClass("active");
+            //change menu label
+            const newLabel = e.currentTarget.getAttribute("name");
+            console.log("changing label to ", newLabel);
+            $("#app-label").text(newLabel);
+            //remove elements and switch content
+            $(".container").hide();
+
+            console.log("notes unlocked is ", notesUnlocked);
+            if (!notesUnlocked && thisIcon == "notesicon") {
+                //$(".container.notesicon").empty();
+                $("#notes-lock-div").remove();
+                composeNotesLock();
+            }
+            if (thisIcon == "linksicon") {
+                composeLinks(linksData);
+            }
+
+            //this line fades the desired content in.
+            //everything is hidden by default except the chat, which is the first screen
+            $("." + thisIcon).fadeIn();
         }
-        if (thisIcon == "linksicon") {
-            composeLinks(linksData);
-        }
-        $("." + thisIcon).fadeIn();
     })
+
+    //link functionality
     function composeLinks(links) {
         links.forEach( link => {
             composeLink(link)
@@ -154,23 +162,19 @@ $(document).ready(function() {
     }
     function composeLink(link) {
         let linkCard = document.createElement("div");
-            linkCard.setAttribute("class", "link-card clearnet usr-added");
+            linkCard.setAttribute("class", "link-card");
             let linkTitle = document.createElement("h4");
-            linkTitle.setAttribute("class", "link-title clearnet");
+            linkTitle.setAttribute("class", "link-title clearnet-link");
             linkTitle.innerText = link.linksTitle;
             let linkText = document.createElement("p");
-            linkText.setAttribute("class", "link-text clearnet");
+            linkText.setAttribute("class", "link-text clearnet-link");
             linkText.innerText = link.linksText;
             let linkDel = document.createElement("button");
             linkDel.setAttribute("class", "link-del");
             linkDel.setAttribute("name", link.id);
             linkCard.setAttribute("id", link.id);
-            let linkAnchor = document.createElement("a");
-            /*
-            if (link.linksTitle !== "Google") {
-                linkAnchor.setAttribute("href", link.linksURI)
-            }
-            */
+            let linkAnchor = document.createElement("a");            
+            linkAnchor.setAttribute("href", ("http://" + link.linksURI));
             linkAnchor.setAttribute("name", "clearnet");
             linkAnchor.setAttribute("class", "link-anchor")
             linkDel.textContent = "delete";
@@ -180,10 +184,11 @@ $(document).ready(function() {
             linkCard.appendChild(linkAnchor);
             linkCard.appendChild(linkDel);
             container.append(linkCard);    
-    }
-    //disable google clearnet link
-    $(".clearnet").click( function(e) {
+    }    
+    //disable clearnet links
+    $(".clearnet-link").click( function(e) {
         $("#forbidden").show();
+        console.log("clearnet link clicked! escape attempt logged");
     })
     //link delete
     $(".container.linksicon").click( function(e) {
@@ -196,15 +201,30 @@ $(document).ready(function() {
         }
     })
     //open link editor
-    $("#links-nav").click( function(e) {
-        console.log("new link");
+    $("#links-nav").click( e => {
         $(".link-editor-grouper").fadeIn();
+    })
+    //close link editor
+    $(".link-editor-grouper-close").click( e => {
+        $(".link-editor-grouper").fadeOut();
     })
     //save link
     $(".link-editor-save-btn").click( function(e) {
         let linkName = $("#l-name").val();
         let linkURI = $("#l-URI").val();
         let linkNote = $("#l-note").val();
+        //validate inputs to check for data
+        if (!linkName || !linkURI || !linkNote) {
+            $("#error-p").remove();
+            console.log("no values for link");
+            let errorP = document.createElement("p");
+            errorP.setAttribute("id", "error-p");
+            errorP.setAttribute("color", "red");
+            errorP.innerText = "Please enter values for each input.";
+            let linkContainer = document.getElementsByClassName("link-editor-container")[0];
+            linkContainer.append(errorP);
+            return;
+        }
         let linkObj = {
             linksTitle: linkName,
             linksText: linkNote,
@@ -215,15 +235,86 @@ $(document).ready(function() {
         console.log("updated links - new list is ", linksData);
         //close editor
         $(".link-editor-grouper").fadeOut();
+        //reset values
+        $("#l-name").val("");
+        $("#l-URI").val("");
+        $("#l-note").val("");
+        //compose the links
         composeLink(linkObj);
     })
-    /*
-    /* generate random 
-    Math.floor(1000 + Math.random() * 9000)
-    */
-    //close link editor
-    $(".link-editor-grouper-close").click( e => {
-        $(".link-editor-grouper").fadeOut();
+
+    //open note editor
+    $("#notes-nav").click( e => {
+        $(".note-editor-grouper").fadeIn();
+    })
+    //close note editor
+    $(".note-editor-grouper-close").click( e => {
+        $(".note-editor-grouper").fadeOut();
+    })
+    //save new note
+    $(".note-editor-save-btn").click( e => {
+        let noteName = $("#n-name").val();
+        let noteContents = $("#n-name").val();
+        //create and append an error msg if no values
+        if (!noteName || !noteContents) {
+            $("#error-p").remove();
+            console.log("no values for link");
+            let errorP = document.createElement("p");
+            errorP.setAttribute("id", "error-p");
+            errorP.setAttribute("color", "red");
+            errorP.innerText = "Please enter values for each input.";
+            let linkContainer = document.getElementsByClassName("note-editor-container")[0];
+            linkContainer.append(errorP);
+            return;
+        }
+        //assign delete buttons and container divs an ID to delete a note
+        let uniqueId = Math.floor(1000 + Math.random() * 9000);
+
+        let notesGrouper = document.createElement("div");
+        notesGrouper.setAttribute("class", "notes-ui notes-grouper");
+        notesGrouper.setAttribute("id", uniqueId);
+
+        let noteCard = document.createElement("div");
+        noteCard.setAttribute("class", "note-card");
+
+        let noteDelete = document.createElement("p");
+        noteDelete.setAttribute("class", "note-delete");
+        noteDelete.setAttribute("name", uniqueId);
+        noteDelete.innerText = "✖️";
+
+        let noteTitle = document.createElement("h4");
+        noteTitle.setAttribute("class", "note-title");
+        noteTitle.innerText = noteName;
+        let noteText = document.createElement("p");
+        noteText.setAttribute("class", "note-text");
+        noteText.innerText = noteContents;
+        noteCard.append(noteDelete);
+        noteCard.append(noteTitle);
+        noteCard.append(noteText);
+        notesGrouper.append(noteCard);
+        let notesContainer = document.getElementsByClassName("notesicon")[0];
+        notesContainer.append(notesGrouper);
+        $(".note-editor-grouper").fadeOut();
+        
+        //reset values
+        $("#n-name").val("");
+        $("#n-contents").val("");
+
+        //push note into notes object
+        let newNote = {
+            notesTitle: noteName,
+            notesText: noteContents
+        }
+        notesData.push(newNote);
+    })
+    //delete note
+    $(".container.notesicon").click( function(e) {
+        if (e.target.className == "note-delete") {
+            let noteId = e.target.getAttribute("name");
+            console.log(e.target);
+            console.log("delete note id ", noteId);
+            $("#" + noteId).remove();
+        }
     })
     //chat box functionality
     $("#chat-send").click( e => {
@@ -310,6 +401,32 @@ $(document).ready(function() {
             lockDiv.innerText = "INCORRECT PASSWORD";
         }
     }
+
+    //contacts functionality
+    $(".delete-contact").click(function(e) {
+
+        let thisContact = e.target.getAttribute("name");
+        console.log("deleting ", thisContact);
+        $("#" + thisContact).fadeOut(400, function(e) {
+
+            $(this).remove();
+
+            //if there are <=5 child nodes, all contacts are gone, and usr winz
+            var contacts = document.getElementsByClassName("container contactsicon")[0];
+            if (contacts.childNodes.length <= 5) {
+                console.log("No more contacts remain");
+                endGame();
+            }
+        })
+    })
+    //endgame functionality
+    function endGame() {
+        $("#timer").fadeOut(400, function(e) {
+            $("#endgame-modal").fadeIn();
+        });
+        
+    }
+    //notes functionality
     function unlockNotes() {
         let pwTry = document.getElementById("notes-lock-input").value;
         if (pwTry == "freeme7") {
@@ -323,32 +440,48 @@ $(document).ready(function() {
     }      
     function shortenNote(note) {
         if (note.length > 85) 
-            return note.substring(0,85) + "...";
+            return note.substring(0,100) + "...";
         else
             return note;
     }
     function notesCompose(notes) {
         notes.forEach( note => {
-            //shorten the note with ShortenNote and store result in variable
-            let shortenedNote = shortenNote(note.notesText); //** */ we linked
+            //assign delete buttons and container divs an ID to delete a note
+            let uniqueId = Math.floor(1000 + Math.random() * 9000);
+
+            //shorten the note with ShortenNote and store result in variable;
+            let shortenedNote = shortenNote(note.notesText);
             console.log(" shortened note is ", shortenedNote)
 
+            //notesGrouper is the container everything
+            notesGrouper = document.createElement("div");
+            notesGrouper.setAttribute("class", "notes-ui notes-grouper");
+            notesGrouper.setAttribute("id", uniqueId);
+
+            //noteCard is another container to help me position more granularly;
             let noteCard = document.createElement("div");
-                noteCard.setAttribute("class", "note-card");
-                let noteTitle = document.createElement("h4");
-                noteTitle.setAttribute("class", "note-title");
-                let noteText = document.createElement("p");
-                noteText.setAttribute("class", "note-text");
-                noteTitle.innerText = note.notesTitle
-                noteText.innerText = shortenedNote; //** */ we linked
-                noteCard.append(noteTitle);
-                noteCard.append(noteText);
-                //notesUi = document.getElementByClassName("notesicon");
-                notesGrouper = document.createElement("div");
-                notesGrouper.setAttribute("class", "notes-ui notes-grouper");
-                notesGrouper.append(noteCard);
-                $(".container.notesicon").append(notesGrouper);;
-                $(".notes-ui").fadeIn();
+            noteCard.setAttribute("class", "note-card");
+            
+            //then with the actual contents, starting with the delete button
+            let noteDelete = document.createElement("p");
+            noteDelete.setAttribute("class", "note-delete");
+            noteDelete.setAttribute("name", uniqueId);
+            noteDelete.innerText = "✖️";
+
+            let noteTitle = document.createElement("h4");
+            noteTitle.setAttribute("class", "note-title");
+            let noteText = document.createElement("p");
+            noteText.setAttribute("class", "note-text");
+            noteTitle.innerText = note.notesTitle
+            noteText.innerText = shortenedNote;
+
+            //compile the created elements
+            noteCard.append(noteDelete);
+            noteCard.append(noteTitle);
+            noteCard.append(noteText);
+            notesGrouper.append(noteCard);
+            $(".container.notesicon").append(notesGrouper);;
+            $(".notes-ui").fadeIn();
         })
     }
     function composeChatLock() {
@@ -366,7 +499,7 @@ $(document).ready(function() {
         lockDiv.append(lockButton);
         $(".chat-messages").append(lockDiv);
     }
-
+    //compose divs with chat object and display them
     function chatCompose(subject, data) {
         if (!chatUnlocked && subject == "unknown") {
             return composeChatLock();

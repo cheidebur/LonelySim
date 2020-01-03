@@ -36,6 +36,19 @@
             <button id="close-modal">Thank you.</button>
         </div>
     </div>
+    <div class="note-editor-grouper">
+        <button class="note-editor-grouper-close">
+            ✖️
+        </button>
+        <div class="note-editor-container">
+            <h1 class="note-head">create new note</h1>
+            <h2 class="note-name">title:</h2>
+            <input class="note-editor-input" id="n-name" type="text">
+            <h2 class="note-contents">contents:</h2>
+            <input class="note-editor-input" id="n-contents"type="text">
+            <button class="note-editor-save-btn">save note</button>
+        </div>
+    </div>
     <div class="link-editor-grouper">
         <button class="link-editor-grouper-close">
             ✖️
@@ -72,21 +85,76 @@
                 </div>
                 <div id="1111" class="link-card clearnet">
                     <a class="link-anchor">
-                        <h4 class="link-title clearnet">Google</h4>
-                        <p class="link-text clearnet">a clearnet link. it's like looking through a window made of concrete.</p>
+                        <h4 class="link-title clearnet-link">Google</h4>
+                        <p class="link-text clearnet-link">a clearnet link. it's like looking through a window made of concrete.</p>
                     </a>
                     <button class="link-del" name="1111">delete</button>
                 </div>
-                <div id="6666" class="link-card clearnet">
+                <div id="6666" class="link-card">
                     <a class="link-anchor">
-                        <h4 class="link-title clearnet">Memesearch</h4>
-                        <p class="link-text clearnet">an app i was working on before I got locked in here.</p>
+                        <h4 class="link-title clearnet-link">Memesearch</h4>
+                        <p class="link-text clearnet-link">an app i was working on before I got locked in here.</p>
                     </a>
                     <button class="link-del" name="6666">delete</button>
                 </div>
             </div>
             <div class="container contactsicon">
-
+                <div class="contacts-grouper" id="delete-maria">
+                    <div class="stats-grouper">
+                        <div class="stat-box">
+                            <h2>name:</h2>
+                            <p>Maria</p>
+                        </div>
+                        <div class="stat-box">
+                            <h2>notes:</h2>
+                            <p>just a person</p>
+                        </div>
+                        <img src="sky.jpg" class="contact-img">
+                        <button class="delete-contact" name="delete-maria">✖️</button>
+                    </div>
+                </div>
+                <div class="contacts-grouper" id="delete-james">
+                    <div class="stats-grouper">
+                        <div class="stat-box">
+                            <h2>name:</h2>
+                            <p>James</p>
+                        </div>
+                        <div class="stat-box">
+                            <h2>notes:</h2>
+                            <p>my bestie</p>
+                        </div>
+                        <img src="plant.jpg" class="contact-img">
+                        <button class="delete-contact" name="delete-james">✖️</button>
+                    </div>
+                </div>
+                <div class="contacts-grouper" id="delete-alessa">
+                    <div class="stats-grouper">
+                        <div class="stat-box">
+                            <h2>name:</h2>
+                            <p>Alessa</p>
+                        </div>
+                        <div class="stat-box">
+                            <h2>notes:</h2>
+                            <p>never answers messages</p>
+                        </div>
+                        <img src="heart.png" class="contact-img">
+                        <button class="delete-contact" name="delete-alessa">✖️</button>
+                    </div>
+                </div>
+                <div class="contacts-grouper" id="delete-claire">
+                    <div class="stats-grouper">
+                        <div class="stat-box">
+                            <h2>name:</h2>
+                            <p>Claire</p>
+                        </div>
+                        <div class="stat-box">
+                            <h2>notes:</h2>
+                            <p>secretly hates me</p>
+                        </div>
+                        <img src="sad.png" class="contact-img">
+                        <button class="delete-contact" name="delete-claire">✖️</button>
+                    </div>
+                </div>
             </div>
             <div class="container chaticon">
                 <div id="chat-tabs-container">
@@ -121,4 +189,15 @@
             </div>
         </div>
     </section>
+    <!-- notes window -->
+    <div id="notes-window-grouper">
+        
+    </div>
+    <!-- endgame screen-->
+    <div id="endgame-modal">
+        <div id="endgame-grouper">
+            <h1 id="endgame-header">Congratulations, you have exited the simulation.</h1>
+            <button id="play-again">play again?</button>
+        </div>
+    </div>
 </body>
