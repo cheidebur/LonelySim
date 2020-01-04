@@ -450,6 +450,7 @@ body {
     left: 0;
     right: 0;
     width: 66%;
+    min-width: 25em;
     height: 75%;
     margin: 0 auto;
     border-left: 1px solid gray;
@@ -669,5 +670,6 @@ body {
     #content-container {
         width: 100%;
         height: 100%;
+        overflow: inherit;
     }
   }
