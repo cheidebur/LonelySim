@@ -88,7 +88,6 @@ $(document).ready(function() {
         }
     }
     
-
     console.log("Welcome to LonelySim");
 
     //reset game or play again
@@ -330,7 +329,7 @@ $(document).ready(function() {
         e.preventDefault();
         const thisPerson = e.target.className;
         console.log("chat send");
-        msgContent = $("#chat-text-input").val();
+        let msgContent = $("#chat-text-input").val();
         const msg = {
             class: "my-bubble",
             contents: msgContent
@@ -406,7 +405,7 @@ $(document).ready(function() {
                 chatCompose("unknown", unknownConvo);
             })
         } else {
-            lockDiv = document.getElementById("lock-div");
+            let lockDiv = document.getElementById("lock-div");
             lockDiv.innerText = "INCORRECT PASSWORD";
         }
     }
@@ -423,7 +422,7 @@ $(document).ready(function() {
             //if there are <=5 child nodes, all contacts are gone, and usr winz
             var contacts = document.getElementsByClassName("container contactsicon")[0];
             if (contacts.childNodes.length <= 5) {
-                time = document.getElementById("timer-sec").innerText;
+                let time = document.getElementById("timer-sec").innerText;
                 console.log("time is ", time)
                 console.log("No more contacts remain - finished the game in ", time, "seconds.");
                 endGame(time);
@@ -433,7 +432,7 @@ $(document).ready(function() {
     //endgame functionality
     function endGame(gameTime) {
         $("#timer").fadeOut(400, function(e) {
-            winTimeCounter = document.getElementById("win-time");
+            let winTimeCounter = document.getElementById("win-time");
             winTimeCounter.innerText = gameTime;
             $("#endgame-modal").fadeIn();
         });
@@ -499,7 +498,7 @@ $(document).ready(function() {
             console.log(" shortened note is ", shortenedNote)
 
             //notesGrouper is the container everything
-            notesGrouper = document.createElement("div");
+            let notesGrouper = document.createElement("div");
             notesGrouper.setAttribute("class", "notes-ui notes-grouper");
             notesGrouper.setAttribute("id", uniqueId);
 
@@ -534,7 +533,7 @@ $(document).ready(function() {
             noteCard.append(noteText);
             noteCard.append(expandNote);
             notesGrouper.append(noteCard);
-            $(".container.notesicon").append(notesGrouper);;
+            $(".container.notesicon").append(notesGrouper);
             $(".notes-ui").fadeIn();
         })
     }
@@ -596,21 +595,3 @@ $(document).ready(function() {
         $(".container.notesicon").append(lockDiv);
     }
 })
-
-// ------------------ notes and reference
-//
-//
-/*
-var fruits = ["apple", "orange", "cherry"];
-fruits.forEach(myFunction);
-
-function myFunction(item, index) {
-  document.getElementById("demo").innerHTML += index + ":" + item + "<br>";
-}
-
-//   $(this).siblings(".chat-tab-active").find(".chat-tab-active").removeClass("chat-tab-active").addClass("chat-ta");
-/*
-					const userLabel = document.createElement('p')
-					userLabel.setAttribute('class', 'userlabel')
-                    userLabel.innerText = image.imageUploader
-                   */
