@@ -1,4 +1,6 @@
 # LonelySim
+
+### play at https://cheidebur.github.io/LonelySim
 ## Hello, prisoner.
 ![screenshot of forbidden travel](https://github.com/cheidebur/LonelySim/blob/master/screenshot1.png "Screenshot")
 Welcome to LonelySim, an escape room-type game, but with a GUI.
